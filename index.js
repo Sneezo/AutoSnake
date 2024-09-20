@@ -7,9 +7,14 @@ canvas.height = 500;
 canvas2.width = canvas.width;
 canvas2.height = canvas.height;
 var moveThroughWalls = false;
-var FPS = 100;
+var FPS = 15;
 var frameLength = 1000/FPS;
 var snakeSize = canvas.width/20;
+const fpsInput = document.getElementById("fps-input");
+fpsInput.addEventListener("input", ()=>{
+    FPS = parseInt(fpsInput.value,10);
+    frameLength = 1000/FPS;
+})
 
 function drawCauseOfDeath(snake, fruit){
     snake.draw(ctx2);
@@ -187,26 +192,26 @@ class Snake {
 }
 function drawPath(path, snake) {
     if(!path) return;
-    ctx.strokeStyle = "black";  // Set stroke color to yellow
-    ctx.lineWidth = 2;  // Set the thickness of the border
+    ctx.strokeStyle = "black";  
+    ctx.lineWidth = 2;  
 
-    let currentX = snake.body[0].x;  // Start from the snake's head
+    let currentX = snake.body[0].x;  
     let currentY = snake.body[0].y;
 
-    // Iterate through each direction in the path
-    for (let i = 0; i < path.length; i++) {
-        let direction = path[i];  // Get the current direction (e.g., {x: 1, y: 0})
+    
+    for (let i = 1; i < path.length; i++) {
+        let direction = path[i];  
 
-        // Calculate the next position based on the direction
+        
         currentX += direction.x * snake.size;
         currentY += direction.y * snake.size;
-
-        // Draw a rectangle at the next position
+        
+        
         ctx.strokeRect(
-            currentX,  // x position (next position)
-            currentY,  // y position (next position)
-            snake.size,  // width of the rectangle (snake size)
-            snake.size   // height of the rectangle (snake size)
+            currentX,  
+            currentY,  
+            snake.size,  
+            snake.size   
         );
     }
 }
@@ -227,17 +232,17 @@ class Fruit{
     respawn() {
         let isColliding = true;
         
-        // Keep generating new positions until there's no collision
+        
         while (isColliding) {
             this.x = Math.floor(Math.random() * (canvas.width / this.size)) * this.size;
             this.y = Math.floor(Math.random() * (canvas.height / this.size)) * this.size;
             isColliding = false;
     
-            // Check for collisions with the snake's body
+            
             for (let segment of snake.body) {
                 if (collides(this, segment)) {
                     isColliding = true;
-                    break; // Break out of the loop if a collision is found
+                    break; 
                 }
             }
         }
@@ -253,17 +258,8 @@ class Fruit{
 
 function collides(snakeHead, fruit) {
     return snakeHead.x === fruit.x && snakeHead.y === fruit.y;
-/*     return (
-        snakeHead.x < fruit.x + fruit.size &&
-        snakeHead.x + snake.size > fruit.x &&
-        snakeHead.y < fruit.y + fruit.size &&
-        snakeHead.y + snake.size > fruit.y
-    ); */
 }
 
-/* 
-let snake = new Snake(Math.floor(canvas.width/2),Math.floor(canvas.height/2),snakeSize);
-let fruit = new Fruit(Math.floor(canvas.width/3),Math.floor(canvas.height/3),snakeSize); */
 
 function init (){
     snake = new Snake(Math.floor(canvas.width/2),Math.floor(canvas.height/2),snakeSize);

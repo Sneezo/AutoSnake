@@ -8,12 +8,15 @@
 </head>
 <body>
     <canvas id="canvas" class="canvas"></canvas>
-    <div id="buttons">
+    <div>
         <button onclick="start()">Play</button>
-        <button class="walltoggle" id="walltoggle" onclick="toggleWalls()">Move through walls</button>
+        <!-- <button class="walltoggle" id="walltoggle" onclick="toggleWalls()">Move through walls</button> -->
     </div>
+    <label for="fps-input">FPS: </label>
+    <input id="fps-input" type="number" value="15" min="1" max="120" step="1">
+    
     <h1>Death recap:</h1>
     <canvas id="canvas2" class="canvas"></canvas>
-    <script src="index.js"></script>
+    <script src="index.js" defer></script>
 </body>
 </html>
