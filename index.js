@@ -2,8 +2,13 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const canvas2 = document.getElementById("canvas2");
 const ctx2 = canvas2.getContext("2d");
-canvas.width = 500;
-canvas.height = 500;
+if(window.innerWidth < window.innerHeight){
+    canvas.width = window.innerWidth - window.innerWidth%20;
+    canvas.height = canvas.width;
+} else {
+    canvas.width = window.innerHeight - window.innerHeight%20;
+    canvas.height = canvas.width;
+}
 canvas2.width = canvas.width;
 canvas2.height = canvas.height;
 var moveThroughWalls = false;
