@@ -2,13 +2,14 @@ const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const canvas2 = document.getElementById("canvas2");
 const ctx2 = canvas2.getContext("2d");
-canvas.width = 1500;
-canvas.height = 1500;
+canvas.width = 500;
+canvas.height = 500;
 canvas2.width = canvas.width;
 canvas2.height = canvas.height;
 var moveThroughWalls = false;
 var FPS = 100;
 var frameLength = 1000/FPS;
+var snakeSize = canvas.width/20;
 
 function drawCauseOfDeath(snake, fruit){
     snake.draw(ctx2);
@@ -77,6 +78,8 @@ class Snake {
         this.x = x;
         this.y = y;
         this.size = size;
+        this.x -= this.x%this.size;
+        this.y -= this.y%this.size;
         this.direction = {x:1, y:0};
         this.body = [{x:x, y:y, dir:this.direction}];
         this.alive = true;
@@ -217,6 +220,8 @@ class Fruit{
         this.y = y;
         this.size = size;
         this.color = color;
+        this.x -= this.x%this.size;
+        this.y -= this.y%this.size;
     }
 
     respawn() {
@@ -256,14 +261,14 @@ function collides(snakeHead, fruit) {
     ); */
 }
 
-
-let snake = new Snake(Math.floor(canvas.width/2),Math.floor(canvas.height/2),50);
-let fruit = new Fruit(Math.floor(canvas.width/3),Math.floor(canvas.height/3),50);
+/* 
+let snake = new Snake(Math.floor(canvas.width/2),Math.floor(canvas.height/2),snakeSize);
+let fruit = new Fruit(Math.floor(canvas.width/3),Math.floor(canvas.height/3),snakeSize); */
 
 function init (){
-    snake = new Snake(Math.floor(canvas.width/2),Math.floor(canvas.height/2),50);
+    snake = new Snake(Math.floor(canvas.width/2),Math.floor(canvas.height/2),snakeSize);
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    fruit = new Fruit(Math.floor(canvas.width/3),Math.floor(canvas.height/3),50);
+    fruit = new Fruit(Math.floor(canvas.width/3),Math.floor(canvas.height/3),snakeSize);
 }
 
 function autoPilot(snake, fruit){
@@ -294,6 +299,9 @@ function bfsAutoPilot(snake, fruit){
 
 let lastTime = 0;
 function gameLoop(currentTime){
+    if (typeof snake === `undefined` || !snake){
+        init();
+    }
     const dTime = currentTime - lastTime;
     if (dTime >= frameLength && snake.alive){
         ctx.clearRect(0,0,canvas.width,canvas.height);
