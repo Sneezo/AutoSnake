@@ -3,10 +3,10 @@ const ctx = canvas.getContext("2d");
 const canvas2 = document.getElementById("canvas2");
 const ctx2 = canvas2.getContext("2d");
 if(window.innerWidth < window.innerHeight){
-    canvas.width = window.innerWidth - window.innerWidth%20;
+    canvas.width = window.innerWidth*0.90 - window.innerWidth*0.90%20;
     canvas.height = canvas.width;
 } else {
-    canvas.width = window.innerHeight - window.innerHeight%20;
+    canvas.width = window.innerHeight*0.90 - window.innerHeight*0.90%20;
     canvas.height = canvas.width;
 }
 canvas2.width = canvas.width;
